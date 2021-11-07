@@ -3,9 +3,8 @@
 #include <sstream>
 #include <fstream>
 #include <vector>
-#include <fstream>
 #include <string>
-#include <cstring>  
+#include <cstring>
 #include <chrono>
 
 using namespace std;
@@ -22,13 +21,13 @@ void getMatrixValues(vector<vector<int>> matrix){
 }
 
 vector<vector<int>> readMatrixFromTxtFile(string matrix_filename){
-    std::ifstream file(matrix_filename);
-    std::string str;
+    ifstream file(matrix_filename);
+    string str;
     
     int line,column;
 
-    std::getline(file, str);
-    std::size_t found = str.find(" ");
+    getline(file, str);
+    size_t found = str.find(" ");
 
     string lineStr = str.substr(0, found);
     string columnStr = str.substr(found);
@@ -45,7 +44,7 @@ vector<vector<int>> readMatrixFromTxtFile(string matrix_filename){
         vector<int> vectorColumn;
 
         for(int j=0; j<column; j++){
-            if(std::getline(file, str) && !(str.find("s") != string::npos)){
+            if(getline(file, str) && !(str.find("s") != string::npos)){
 
                 stringstream valueStr(str);
                 int value = 0;

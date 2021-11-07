@@ -61,7 +61,6 @@ int main(int argc, char *argv[]) {
     generateMatrix(first_matrix, dim_n1, dim_m1);
     generateMatrix(second_matrix, dim_n2, dim_m2);
 
-
     saveMatrix(first_matrix, dim_n1, dim_m1, "first_matrix");
     saveMatrix(second_matrix, dim_n2, dim_m2, "second_matrix");
 
