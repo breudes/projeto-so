@@ -74,7 +74,7 @@ void createMatrixSegmentsFiles(int files_quantity) {
 
     for (int i = 1; i < length; i++) {
         string root = "./matrix-files/process/";
-        string file = root + "seg" + to_string(i) + ".txt";
+        string file = root + "matrix_result_seg" + to_string(i) + ".txt";
 
         ofstream outFile(file);
     }

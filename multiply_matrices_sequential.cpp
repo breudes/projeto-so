@@ -124,6 +124,6 @@ int main(int argc, char *argv[]) {
     // multiply matrices
     vector<vector<int>> result = multiplyMatrices(first_matrix,second_matrix);
     // write matrix on new .txt file
-    saveMatrix(result, result.size(), result[0].size(), "result_matrix");
+    saveMatrix(result, result.size(), result[0].size(), "matrix_result");
     return 0;
 }
