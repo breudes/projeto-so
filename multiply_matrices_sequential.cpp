@@ -60,6 +60,26 @@ vector<vector<int>> readMatrixFromTxtFile(string matrix_filename){
     return matrix;
 }
 
+void saveMatrix(vector<vector<int>> matrix, int dim_n, int dim_m, double time_result, string file_name) {
+    string file = "./matrix-files/sequential/" + file_name + ".txt";
+    ofstream outFile(file);
+
+    if (!outFile) {
+        cout << "Arquivo " + file_name + ".txt nao pode ser aberto" << endl;
+        abort();
+    }
+    
+    outFile << dim_n << " " << dim_m << '\n';
+
+    for (int i = 0; i < dim_n; i++) {
+      for (int j = 0; j < dim_m; j++) {
+        outFile << matrix[i][j] << '\n';
+      }
+    }
+    
+    outFile << time_result << " ms";
+}
+
 vector<vector<int>> multiplyMatrices(vector<vector<int>> matrix_one, vector<vector<int>> matrix_two){
     vector<vector<int>> matrix_result;
     
@@ -68,6 +88,8 @@ vector<vector<int>> multiplyMatrices(vector<vector<int>> matrix_one, vector<vect
 
     int second_line = matrix_two.size();
     int second_column = matrix_two[0].size();
+
+    auto start = chrono::duration_cast<chrono::nanoseconds>(chrono::system_clock::now().time_since_epoch()).count();
 
     for(int i=0; i<first_line; i++){
         vector<int> result;
@@ -82,34 +104,11 @@ vector<vector<int>> multiplyMatrices(vector<vector<int>> matrix_one, vector<vect
         matrix_result.push_back(result);
     }
 
+    auto end = chrono::duration_cast<chrono::nanoseconds>(chrono::system_clock::now().time_since_epoch()).count();
+    auto time_result = (end - start) * 0.000001; //time result in milliseconds
+    // write matrix on new .txt file
+    saveMatrix(matrix_result, first_line, second_column, time_result, "result_matrix");
     return matrix_result;
-}
-
-void saveMatrix(vector<vector<int>> matrix, int dim_n, int dim_m, string file_name) {
-    string file = "./matrix-files/sequential/" + file_name + ".txt";
-    ofstream outFile(file);
-
-    if (!outFile) {
-        cout << "Arquivo " + file_name + ".txt nao pode ser aberto" << endl;
-        abort();
-    }
-    
-    outFile << dim_n << " " << dim_m << '\n';
-
-    auto start = chrono::high_resolution_clock::now();
-
-    for (int i = 0; i < dim_n; i++) {
-      for (int j = 0; j < dim_m; j++) {
-        outFile << matrix[i][j] << '\n';
-      }
-    }
-
-    auto end = chrono::high_resolution_clock::now();
-    auto diff = chrono::duration_cast<std::chrono::nanoseconds> (end - start);
-
-    auto time_result = (diff * 1e-9); //time result in seconds
-    
-    outFile << time_result.count() << "s";
 }
 
 int main(int argc, char *argv[]) {
@@ -123,7 +122,5 @@ int main(int argc, char *argv[]) {
     vector<vector<int>> second_matrix = readMatrixFromTxtFile(M2);
     // multiply matrices
     vector<vector<int>> result = multiplyMatrices(first_matrix,second_matrix);
-    // write matrix on new .txt file
-    saveMatrix(result, result.size(), result[0].size(), "matrix_result");
     return 0;
 }

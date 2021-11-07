@@ -29,20 +29,11 @@ void saveMatrix(vector<vector<int>> matrix, int dim_n, int dim_m, string file_na
     
     outFile << dim_n << " " << dim_m << '\n';
 
-    auto start = chrono::high_resolution_clock::now();
-
     for (int i = 0; i < dim_n; i++) {
       for (int j = 0; j < dim_m; j++) {
         outFile << matrix[i][j] << '\n';
       }
     }
-
-    auto end = chrono::high_resolution_clock::now();
-    auto diff = chrono::duration_cast<std::chrono::nanoseconds> (end - start);
-
-    auto time_result = (diff * 1e-9); //time result in seconds
-    
-    outFile << time_result.count() << "s";
 }
 
 int main(int argc, char *argv[]) {
