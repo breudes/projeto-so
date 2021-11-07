@@ -86,7 +86,7 @@ vector<vector<int>> multiplyMatrices(vector<vector<int>> matrix_one, vector<vect
 }
 
 void saveMatrix(vector<vector<int>> matrix, int dim_n, int dim_m, string file_name) {
-    string file = "./matrix-files/" + file_name + ".txt";
+    string file = "./matrix-files/sequential" + file_name + ".txt";
     ofstream outFile(file);
 
     if (!outFile) {
