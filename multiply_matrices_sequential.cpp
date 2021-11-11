@@ -6,6 +6,7 @@
 #include <string>
 #include <cstring>
 #include <chrono>
+#include "utils.h"
 
 using namespace std;
 
@@ -60,32 +61,7 @@ vector<vector<int>> readMatrixFromTxtFile(string matrix_filename){
     return matrix;
 }
 
-vector<vector<int>> multiplyMatrices(vector<vector<int>> matrix_one, vector<vector<int>> matrix_two){
-    vector<vector<int>> matrix_result;
-    
-    int first_line = matrix_one.size();
-    int first_column = matrix_one[0].size();
-
-    int second_line = matrix_two.size();
-    int second_column = matrix_two[0].size();
-
-    for(int i=0; i<first_line; i++){
-        vector<int> result;
-
-        for(int j=0; j<second_column; j++){
-            int value = 0;
-            for(int k=0; k<second_line; k++){
-                value += matrix_one[i][k]*matrix_two[k][j];
-            }
-            result.push_back(value);
-        }
-        matrix_result.push_back(result);
-    }
-
-    return matrix_result;
-}
-
-void saveMatrix(vector<vector<int>> matrix, int dim_n, int dim_m, string file_name) {
+void saveMatrix(vector<vector<int>> matrix, int dim_n, int dim_m, int time_result, string file_name) {
     string file = "./matrix-files/sequential/" + file_name + ".txt";
     ofstream outFile(file);
 
@@ -96,20 +72,14 @@ void saveMatrix(vector<vector<int>> matrix, int dim_n, int dim_m, string file_na
     
     outFile << dim_n << " " << dim_m << '\n';
 
-    auto start = chrono::high_resolution_clock::now();
-
     for (int i = 0; i < dim_n; i++) {
       for (int j = 0; j < dim_m; j++) {
-        outFile << matrix[i][j] << '\n';
+        string index = "c"+to_string(i)+to_string(j);
+        outFile << index << matrix[i][j] << '\n';
       }
     }
-
-    auto end = chrono::high_resolution_clock::now();
-    auto diff = chrono::duration_cast<std::chrono::nanoseconds> (end - start);
-
-    auto time_result = (diff * 1e-9); //time result in seconds
     
-    outFile << time_result.count() << "s";
+    outFile << time_result << "ms";
 }
 
 int main(int argc, char *argv[]) {
@@ -122,8 +92,6 @@ int main(int argc, char *argv[]) {
     // read M2 values
     vector<vector<int>> second_matrix = readMatrixFromTxtFile(M2);
     // multiply matrices
-    vector<vector<int>> result = multiplyMatrices(first_matrix,second_matrix);
-    // write matrix on new .txt file
-    saveMatrix(result, result.size(), result[0].size(), "matrix_result");
+    multiplyMatricesSequential(first_matrix,second_matrix);
     return 0;
 }

@@ -50,6 +50,38 @@ vector<vector<int>> readMatrixFromTxtFile(string matrix_filename){
     return matrix;
 }
 
+void multiplyMatricesSequential(vector<vector<int>> matrix_one, vector<vector<int>> matrix_two) {
+    vector<vector<int>> matrix_result;
+    
+    int first_line = matrix_one.size();
+    int first_column = matrix_one[0].size();
+
+    int second_line = matrix_two.size();
+    int second_column = matrix_two[0].size();
+
+    auto start = chrono::duration_cast<chrono::nanoseconds>(chrono::system_clock::now().time_since_epoch()).count();
+
+    for(int i=0; i<first_line; i++){
+        vector<int> result;
+
+        for(int j=0; j<second_column; j++){
+            int value = 0;
+            for(int k=0; k<second_line; k++){
+                value += matrix_one[i][k]*matrix_two[k][j];
+            }
+            result.push_back(value);
+        }
+        matrix_result.push_back(result);
+    }
+
+    auto end = chrono::duration_cast<chrono::nanoseconds>(chrono::system_clock::now().time_since_epoch()).count();
+    
+    auto time_result = ((end - start) * 0.000001);
+
+    // write matrix on new .txt file
+    saveMatrixOnTxtFile(matrix_result, first_line, second_column, time_result, "result_matrix");
+}
+
 void saveMatrixOnTxtFile(vector<vector<int>> matrix, int dim_n, int dim_m, int time_result, string file_name, string algorithm) {
     string file = "./matrix-files/" + algorithm + "/" + file_name + ".txt";
     ofstream outFile(file);
