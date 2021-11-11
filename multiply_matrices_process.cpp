@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
             string file_name = "matrix_result_seg" + segment_number;
             string algorithm = "process";
 
-            saveMatrixOnTxtFile(result_matrix_segment, dim_n, dim_m, time_result, file_name, algorithm);
+            saveMatrixOnTxtFile(dim_n1, dim_m2, result_matrix_segment, dim_n, dim_m, (i+1), time_result, file_name, algorithm);
 
             cout << "entrei aqui" << endl;
             exit(0);

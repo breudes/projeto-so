@@ -31,7 +31,8 @@ void saveMatrix(vector<vector<int>> matrix, int dim_n, int dim_m, string file_na
 
     for (int i = 0; i < dim_n; i++) {
       for (int j = 0; j < dim_m; j++) {
-        outFile << matrix[i][j] << '\n';
+        string index = "c"+ to_string(i) + to_string(j);
+        outFile << index << matrix[i][j] << '\n';
       }
     }
 }

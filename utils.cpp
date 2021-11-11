@@ -79,10 +79,10 @@ void multiplyMatricesSequential(vector<vector<int>> matrix_one, vector<vector<in
     auto time_result = ((end - start) * 0.000001);
 
     // write matrix on new .txt file
-    saveMatrixOnTxtFile(matrix_result, first_line, second_column, time_result, "result_matrix");
+    saveMatrixOnTxtFile(first_line, second_column, matrix_result, first_line, second_column, 0, time_result, "result_matrix","sequential");
 }
 
-void saveMatrixOnTxtFile(vector<vector<int>> matrix, int dim_n, int dim_m, double time_result, string file_name, string algorithm) {
+void saveMatrixOnTxtFile(int dim_n_original, int dim_m_original, vector<vector<int>> matrix, int dim_n, int dim_m, int segment_number, double time_result, string file_name, string algorithm) {
     string file = "./matrix-files/" + algorithm + "/" + file_name + ".txt";
     ofstream outFile(file);
 
@@ -91,13 +91,48 @@ void saveMatrixOnTxtFile(vector<vector<int>> matrix, int dim_n, int dim_m, doubl
         abort();
     }
     
-    outFile << dim_n << " " << dim_m << '\n';
+    outFile << dim_n_original << " " << dim_m_original << '\n';
 
-    for (int i = 0; i < dim_n; i++) {
-      for (int j = 0; j < dim_m; j++) {
-        string index = "c" + to_string(i) + to_string(j);
-        outFile << index << " " << matrix[i][j] << '\n';
+    if(segment_number>=0){
+
+      int values[(dim_n*dim_m)]; 
+      int k = 0;
+
+      for (int i = 0; i < dim_n; i++) {
+        for (int j = 0; j < dim_m; j++) {
+          values[k] = matrix[i][j];
+          cout << values[k];
+          k++;
+        }
       }
+
+      int m=0;
+      for (int i=0; i<dim_n_original; i++){
+        for (int j=0; j<dim_m_original; j++){
+          
+          string index = "c" + to_string(i) + to_string(j);
+          if(i == (segment_number-1)){
+            cout << m << "       JESUS\n" ;
+            outFile << index << " " << values[m] << '\n';
+          } else {
+            outFile << index << " " << "0" << '\n';
+          }
+
+          m++;
+        }
+
+        m=0;
+      }
+      
+    } else {
+
+      for (int i = 0; i < dim_n; i++) {
+        for (int j = 0; j < dim_m; j++) {
+          string index = "c" + to_string(i) + to_string(j);
+          outFile << index << " " << matrix[i][j] << '\n';
+        }
+      }
+      
     }
     
     outFile << time_result;
