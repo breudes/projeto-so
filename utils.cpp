@@ -82,7 +82,7 @@ void multiplyMatricesSequential(vector<vector<int>> matrix_one, vector<vector<in
     saveMatrixOnTxtFile(matrix_result, first_line, second_column, time_result, "result_matrix");
 }
 
-void saveMatrixOnTxtFile(vector<vector<int>> matrix, int dim_n, int dim_m, int time_result, string file_name, string algorithm) {
+void saveMatrixOnTxtFile(vector<vector<int>> matrix, int dim_n, int dim_m, double time_result, string file_name, string algorithm) {
     string file = "./matrix-files/" + algorithm + "/" + file_name + ".txt";
     ofstream outFile(file);
 
