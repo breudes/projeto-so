@@ -103,7 +103,6 @@ int main(int argc, char *argv[]) {
 
             saveMatrixOnTxtFile(dim_n1, dim_m2, result_matrix_segment, dim_n, dim_m, (i+1), time_result, file_name, algorithm);
 
-            cout << "entrei aqui" << endl;
             exit(0);
           }
         }

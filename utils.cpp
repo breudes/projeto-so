@@ -101,7 +101,6 @@ void saveMatrixOnTxtFile(int dim_n_original, int dim_m_original, vector<vector<i
       for (int i = 0; i < dim_n; i++) {
         for (int j = 0; j < dim_m; j++) {
           values[k] = matrix[i][j];
-          cout << values[k];
           k++;
         }
       }
@@ -112,7 +111,6 @@ void saveMatrixOnTxtFile(int dim_n_original, int dim_m_original, vector<vector<i
           
           string index = "c" + to_string(i) + to_string(j);
           if(i == (segment_number-1)){
-            cout << m << "       JESUS\n" ;
             outFile << index << " " << values[m] << '\n';
           } else {
             outFile << index << " " << "0" << '\n';
