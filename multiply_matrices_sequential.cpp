@@ -6,6 +6,7 @@
 #include <string>
 #include <cstring>
 #include <chrono>
+#include "utils.h"
 
 using namespace std;
 
@@ -60,7 +61,11 @@ vector<vector<int>> readMatrixFromTxtFile(string matrix_filename){
     return matrix;
 }
 
+<<<<<<< HEAD
 void saveMatrix(vector<vector<int>> matrix, int dim_n, int dim_m, double time_result, string file_name) {
+=======
+void saveMatrix(vector<vector<int>> matrix, int dim_n, int dim_m, int time_result, string file_name) {
+>>>>>>> 0d3dc7e9fb174ddd50d8778550cb0bad1ddd7fed
     string file = "./matrix-files/sequential/" + file_name + ".txt";
     ofstream outFile(file);
 
@@ -73,6 +78,7 @@ void saveMatrix(vector<vector<int>> matrix, int dim_n, int dim_m, double time_re
 
     for (int i = 0; i < dim_n; i++) {
       for (int j = 0; j < dim_m; j++) {
+<<<<<<< HEAD
         outFile << matrix[i][j] << '\n';
       }
     }
@@ -109,6 +115,14 @@ vector<vector<int>> multiplyMatrices(vector<vector<int>> matrix_one, vector<vect
     // write matrix on new .txt file
     saveMatrix(matrix_result, first_line, second_column, time_result, "result_matrix");
     return matrix_result;
+=======
+        string index = "c"+to_string(i)+to_string(j);
+        outFile << index << matrix[i][j] << '\n';
+      }
+    }
+    
+    outFile << time_result << "ms";
+>>>>>>> 0d3dc7e9fb174ddd50d8778550cb0bad1ddd7fed
 }
 
 int main(int argc, char *argv[]) {
@@ -121,6 +135,10 @@ int main(int argc, char *argv[]) {
     // read M2 values
     vector<vector<int>> second_matrix = readMatrixFromTxtFile(M2);
     // multiply matrices
+<<<<<<< HEAD
     vector<vector<int>> result = multiplyMatrices(first_matrix,second_matrix);
+=======
+    multiplyMatricesSequential(first_matrix,second_matrix);
+>>>>>>> 0d3dc7e9fb174ddd50d8778550cb0bad1ddd7fed
     return 0;
 }
